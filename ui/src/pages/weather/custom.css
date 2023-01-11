@@ -1,0 +1,11 @@
+.white {
+  color: white;
+}
+
+.link {
+  color: #eb6e4b;
+}
+
+.link:hover {
+  filter: brightness(0.8);
+}

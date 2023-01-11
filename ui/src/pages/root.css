@@ -1,0 +1,8 @@
+.page-bg {
+  background-image: url("../../public/images/mountain.jpg");
+  height: 100vh;
+  min-height: 660px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
