@@ -6,13 +6,14 @@ import {
   FormGroup,
   FormFeedback,
   Input,
+  InputGroup,
   Row,
   Col,
   Spinner,
 } from "reactstrap";
 import { setCookie } from "typescript-cookie";
 
-import { getWeatherByCity } from "../../api";
+import { getWeatherByCity, APIResponse } from "../../api";
 
 import { ReactComponent as SearchSvg } from "../../assets/images/search.svg";
 
@@ -55,25 +56,34 @@ export const WeatherPage: React.FunctionComponent = () => {
   const [locationUi, setLocationUi] = useState("");
   const [weatherData, setWeatherData] = useState<Weather | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [searchError, setSearchError] = useState(false);
+  const [apiResponseErrorStatus, setApiResponseErrorStatus] = useState(false);
+  const [apiResponseError, setApiResponseError] = useState("");
+
+  const handleErrors = (err: any) => {
+    if (err.response.status === 404) {
+      setApiResponseErrorStatus(true);
+      setApiResponseError("City not found");
+    }
+  };
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (locationUi === "") return;
     try {
       setIsSubmitting(true);
-      const { data } = await getWeatherByCity(locationUi);
-      data.sys.last_updated = Date.now();
-      setWeatherData(data);
-      setCookie("weatherData", JSON.stringify(data), {
+      const res = await getWeatherByCity(locationUi);
+      console.log("data:", res);
+      res.data.sys.last_updated = Date.now();
+      setWeatherData(res.data);
+      setCookie("weatherData", JSON.stringify(res.data), {
         expires: 1,
         sameSite: "Lax",
       });
       setIsSubmitting(false);
-      setSearchError(false);
-    } catch (err) {
-      console.error(err);
-      setSearchError(true);
+      setApiResponseErrorStatus(false);
+      setApiResponseError("");
+    } catch (err: any) {
+      handleErrors(err);
       setIsSubmitting(false);
     }
   };
@@ -94,9 +104,8 @@ export const WeatherPage: React.FunctionComponent = () => {
                       type="text"
                       value={locationUi}
                       onChange={(e) => setLocationUi(e.target.value)}
-                      invalid={searchError}
+                      invalid={apiResponseErrorStatus}
                     />
-                    <FormFeedback>Location not found</FormFeedback>
                     <Button color="primary">
                       {isSubmitting ? (
                         <Spinner size="sm"></Spinner>
@@ -105,6 +114,12 @@ export const WeatherPage: React.FunctionComponent = () => {
                       )}
                     </Button>
                   </FormGroup>
+                  <FormFeedback></FormFeedback>
+                </Col>
+              </Row>
+              <Row>
+                <Col className="d-flex justify-content-center">
+                  <p style={{ color: "red" }}>{apiResponseError}</p>
                 </Col>
               </Row>
             </Form>
