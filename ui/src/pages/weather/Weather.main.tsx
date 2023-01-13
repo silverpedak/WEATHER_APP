@@ -6,14 +6,13 @@ import {
   FormGroup,
   FormFeedback,
   Input,
-  InputGroup,
   Row,
   Col,
   Spinner,
 } from "reactstrap";
 import { setCookie } from "typescript-cookie";
 
-import { getWeatherByCity, APIResponse } from "../../api";
+import { getWeatherByCity } from "../../api";
 
 import { ReactComponent as SearchSvg } from "../../assets/images/search.svg";
 
@@ -60,6 +59,7 @@ export const WeatherPage: React.FunctionComponent = () => {
   const [apiResponseError, setApiResponseError] = useState("");
 
   const handleErrors = (err: any) => {
+    console.log(err);
     if (err.response.status === 404) {
       setApiResponseErrorStatus(true);
       setApiResponseError("City not found");
