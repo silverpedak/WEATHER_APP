@@ -21,7 +21,7 @@ const NavBar: React.FunctionComponent = () => {
     <>
       <Navbar className="shadow-lg" expand="sm" container="xl">
         <NavbarBrand tag={Link} to="/">
-          WeatherNow
+          Weather
         </NavbarBrand>
         <NavbarToggler onClick={toggle}>
           <BurgerSvg style={{ width: "35px", height: "35px" }} />

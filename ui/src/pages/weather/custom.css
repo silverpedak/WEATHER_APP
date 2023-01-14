@@ -9,3 +9,7 @@
 .link:hover {
   filter: brightness(0.8);
 }
+
+.apiResponseError {
+  color: red;
+}

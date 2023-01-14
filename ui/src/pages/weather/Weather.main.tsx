@@ -58,33 +58,35 @@ export const WeatherPage: React.FunctionComponent = () => {
   const [apiResponseErrorStatus, setApiResponseErrorStatus] = useState(false);
   const [apiResponseError, setApiResponseError] = useState("");
 
-  const handleErrors = (err: any) => {
-    console.log(err);
-    if (err.response.status === 404) {
-      setApiResponseErrorStatus(true);
-      setApiResponseError("City not found");
-    }
-  };
-
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (locationUi === "") return;
     try {
       setIsSubmitting(true);
       const res = await getWeatherByCity(locationUi);
-      console.log("data:", res);
       res.data.sys.last_updated = Date.now();
       setWeatherData(res.data);
+      setIsSubmitting(false);
+      setApiResponseErrorStatus(false);
+      setApiResponseError("");
       setCookie("weatherData", JSON.stringify(res.data), {
         expires: 1,
         sameSite: "Lax",
       });
-      setIsSubmitting(false);
-      setApiResponseErrorStatus(false);
-      setApiResponseError("");
     } catch (err: any) {
-      handleErrors(err);
       setIsSubmitting(false);
+      setApiResponseErrorStatus(true);
+      switch (err.response.status) {
+        case 429: {
+          setApiResponseError("Too many requests");
+          return;
+        }
+        case 404: {
+          setApiResponseError("City not found");
+          return;
+        }
+      }
+      setApiResponseError("Something went wrong");
     }
   };
 
@@ -119,7 +121,7 @@ export const WeatherPage: React.FunctionComponent = () => {
               </Row>
               <Row>
                 <Col className="d-flex justify-content-center">
-                  <p style={{ color: "red" }}>{apiResponseError}</p>
+                  <p className="apiResponseError">{apiResponseError}</p>
                 </Col>
               </Row>
             </Form>
