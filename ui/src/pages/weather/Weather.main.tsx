@@ -18,38 +18,40 @@ import { ReactComponent as SearchSvg } from "../../assets/images/search.svg";
 
 import { WeatherDetailsPanel } from "./weatherDetails.panel";
 
-type WeatherMain = {
-  feels_like: number;
-  humidity: number;
-  pressure: number;
-  temp: number;
-};
+import { Weather } from "../../common";
 
-type WeatherSys = {
-  country: string;
-  sunrise: number;
-  sunset: number;
-  last_updated: number;
-};
+// type WeatherMain = {
+//   feels_like: number;
+//   humidity: number;
+//   pressure: number;
+//   temp: number;
+// };
 
-type WeatherDesc = {
-  main: string;
-  description: string;
-};
+// type WeatherSys = {
+//   country: string;
+//   sunrise: number;
+//   sunset: number;
+//   last_updated: number;
+// };
 
-type WeatherWind = {
-  speed: number;
-  deg: number;
-  gust: number;
-};
+// type WeatherDesc = {
+//   main: string;
+//   description: string;
+// };
 
-export type Weather = {
-  main: WeatherMain;
-  name: string;
-  sys: WeatherSys;
-  weather: WeatherDesc[];
-  wind: WeatherWind;
-};
+// type WeatherWind = {
+//   speed: number;
+//   deg: number;
+//   gust: number;
+// };
+
+// export type Weather = {
+//   main: WeatherMain;
+//   name: string;
+//   sys: WeatherSys;
+//   weather: WeatherDesc[];
+//   wind: WeatherWind;
+// };
 
 export const WeatherPage: React.FunctionComponent = () => {
   const [locationUi, setLocationUi] = useState("");

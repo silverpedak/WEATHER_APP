@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Weather } from "../pages";
+import { Weather } from "../common";
 
 const WEATHER_UNITS_CONFIG = "metric";
 
