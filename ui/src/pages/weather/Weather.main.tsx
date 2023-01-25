@@ -20,39 +20,6 @@ import { WeatherDetailsPanel } from "./weatherDetails.panel";
 
 import { Weather } from "../../common";
 
-// type WeatherMain = {
-//   feels_like: number;
-//   humidity: number;
-//   pressure: number;
-//   temp: number;
-// };
-
-// type WeatherSys = {
-//   country: string;
-//   sunrise: number;
-//   sunset: number;
-//   last_updated: number;
-// };
-
-// type WeatherDesc = {
-//   main: string;
-//   description: string;
-// };
-
-// type WeatherWind = {
-//   speed: number;
-//   deg: number;
-//   gust: number;
-// };
-
-// export type Weather = {
-//   main: WeatherMain;
-//   name: string;
-//   sys: WeatherSys;
-//   weather: WeatherDesc[];
-//   wind: WeatherWind;
-// };
-
 export const WeatherPage: React.FunctionComponent = () => {
   const [locationUi, setLocationUi] = useState("");
   const [weatherData, setWeatherData] = useState<Weather | null>(null);
